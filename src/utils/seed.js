@@ -13,56 +13,36 @@ const seedEmployees = async () => {
         employeeId: 'EMP001',
         firstName: 'John',
         lastName: 'Doe',
-        email: 'john.doe@company.com',
-        phone: '+1-555-0101',
-        department: 'Engineering',
-        position: 'Senior Software Engineer',
-        salary: 85000.00,
-        isActive: true
+        aadhar_link: 'https://aadhar.gov.in/verify/123456789012',
+        attendance: false
       },
       {
         employeeId: 'EMP002',
         firstName: 'Jane',
         lastName: 'Smith',
-        email: 'jane.smith@company.com',
-        phone: '+1-555-0102',
-        department: 'Marketing',
-        position: 'Marketing Manager',
-        salary: 75000.00,
-        isActive: true
+        aadhar_link: 'https://aadhar.gov.in/verify/234567890123',
+        attendance: true
       },
       {
         employeeId: 'EMP003',
         firstName: 'Mike',
         lastName: 'Johnson',
-        email: 'mike.johnson@company.com',
-        phone: '+1-555-0103',
-        department: 'Sales',
-        position: 'Sales Representative',
-        salary: 65000.00,
-        isActive: true
+        aadhar_link: 'https://aadhar.gov.in/verify/345678901234',
+        attendance: false
       },
       {
         employeeId: 'EMP004',
         firstName: 'Sarah',
         lastName: 'Williams',
-        email: 'sarah.williams@company.com',
-        phone: '+1-555-0104',
-        department: 'HR',
-        position: 'HR Specialist',
-        salary: 60000.00,
-        isActive: true
+        aadhar_link: 'https://aadhar.gov.in/verify/456789012345',
+        attendance: true
       },
       {
         employeeId: 'EMP005',
         firstName: 'David',
         lastName: 'Brown',
-        email: 'david.brown@company.com',
-        phone: '+1-555-0105',
-        department: 'Finance',
-        position: 'Financial Analyst',
-        salary: 70000.00,
-        isActive: true
+        aadhar_link: 'https://aadhar.gov.in/verify/567890123456',
+        attendance: false
       }
     ];
 

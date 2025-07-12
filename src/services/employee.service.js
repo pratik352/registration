@@ -29,15 +29,8 @@ class EmployeeService {
           employeeId: employee.employeeId,
           firstName: employee.firstName,
           lastName: employee.lastName,
-          email: employee.email,
-          phone: employee.phone,
-          department: employee.department,
-          position: employee.position,
-          salary: employee.salary.toString(),
-          hireDate: employee.hireDate,
-          isActive: employee.isActive,
-          createdAt: employee.createdAt,
-          updatedAt: employee.updatedAt
+          aadhar_link: employee.aadhar_link,
+          attendance: employee.attendance
         }
       };
     } catch (error) {
@@ -55,19 +48,13 @@ class EmployeeService {
   async getAllEmployees() {
     try {
       const employees = await this.prisma.employee.findMany({
-        where: {
-          isActive: true
-        },
         select: {
           id: true,
           employeeId: true,
           firstName: true,
           lastName: true,
-          email: true,
-          department: true,
-          position: true,
-          hireDate: true,
-          isActive: true
+          aadhar_link: true,
+          attendance: true
         }
       });
 
