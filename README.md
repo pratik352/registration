@@ -67,15 +67,8 @@ The Employee model includes the following fields:
 - `employeeId`: Unique employee identifier
 - `firstName`: Employee's first name
 - `lastName`: Employee's last name
-- `email`: Unique email address
-- `phone`: Phone number (optional)
-- `department`: Department name
-- `position`: Job position/title
-- `salary`: Annual salary (decimal)
-- `hireDate`: Date of hire
-- `isActive`: Employment status
-- `createdAt`: Record creation timestamp
-- `updatedAt`: Record update timestamp
+- `aadhar_link`: Unique Aadhar verification link
+- `attendance`: Attendance status (boolean)
 
 ## 🔐 Authentication
 
@@ -106,15 +99,8 @@ Authorization: Bearer your-secret-api-token-here
     "employeeId": "EMP001",
     "firstName": "John",
     "lastName": "Doe",
-    "email": "john.doe@company.com",
-    "phone": "+1-555-0101",
-    "department": "Engineering",
-    "position": "Senior Software Engineer",
-    "salary": "85000.00",
-    "hireDate": "2023-01-15T00:00:00.000Z",
-    "isActive": true,
-    "createdAt": "2023-01-15T00:00:00.000Z",
-    "updatedAt": "2023-01-15T00:00:00.000Z"
+    "aadhar_link": "https://aadhar.gov.in/verify/123456789012",
+    "attendance": false
   }
 }
 ```
@@ -139,11 +125,8 @@ Authorization: Bearer your-secret-api-token-here
       "employeeId": "EMP001",
       "firstName": "John",
       "lastName": "Doe",
-      "email": "john.doe@company.com",
-      "department": "Engineering",
-      "position": "Senior Software Engineer",
-      "hireDate": "2023-01-15T00:00:00.000Z",
-      "isActive": true
+      "aadhar_link": "https://aadhar.gov.in/verify/123456789012",
+      "attendance": false
     }
   ],
   "count": 1
