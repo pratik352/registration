@@ -1,6 +1,8 @@
 
 
- const getDemo = () => "Hello";
+ const getDemo = (req, res) => {
+   return res.json({"hello": "hello"});
+ }
 
 
-export { getDemo }
+module.exports =  { getDemo }
