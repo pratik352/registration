@@ -18,4 +18,4 @@ function validate(req, res, next) {
 }
 
 
-export  { validate }
+module.exports = { validate }
