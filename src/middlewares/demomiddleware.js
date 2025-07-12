@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { errorResponse } = require("../utils/common");
-const AppError = require("../utils/error/app.error");
+const AppError = require("../utils/error/AppError");
 
 function validate(req, res, next) {
     
