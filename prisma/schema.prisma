@@ -17,5 +17,6 @@ model Employee {
   lastName    String   @map("last_name")
   aadhar_link String   @unique
   attendance  Boolean  @default(false) @map("attendance")
+  phoneNumber String?  @map("phone_number")
   @@map("employees")
 }

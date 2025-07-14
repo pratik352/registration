@@ -14,35 +14,40 @@ const seedEmployees = async () => {
         firstName: 'John',
         lastName: 'Doe',
         aadhar_link: 'https://aadhar.gov.in/verify/123456789012',
-        attendance: false
+        attendance: false,
+        phoneNumber: '9876543210'
       },
       {
         employeeId: 'EMP002',
         firstName: 'Jane',
         lastName: 'Smith',
         aadhar_link: 'https://aadhar.gov.in/verify/234567890123',
-        attendance: true
+        attendance: true,
+        phoneNumber: '8765432109'
       },
       {
         employeeId: 'EMP003',
         firstName: 'Mike',
         lastName: 'Johnson',
         aadhar_link: 'https://aadhar.gov.in/verify/345678901234',
-        attendance: false
+        attendance: false,
+        phoneNumber: '7654321098'
       },
       {
         employeeId: 'EMP004',
         firstName: 'Sarah',
         lastName: 'Williams',
         aadhar_link: 'https://aadhar.gov.in/verify/456789012345',
-        attendance: true
+        attendance: true,
+        phoneNumber: '6543210987'
       },
       {
         employeeId: 'EMP005',
         firstName: 'David',
         lastName: 'Brown',
         aadhar_link: 'https://aadhar.gov.in/verify/567890123456',
-        attendance: false
+        attendance: false,
+        phoneNumber: '5432109876'
       }
     ];
 
