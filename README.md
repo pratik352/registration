@@ -69,6 +69,7 @@ The Employee model includes the following fields:
 - `lastName`: Employee's last name
 - `aadhar_link`: Unique Aadhar verification link
 - `attendance`: Attendance status (boolean)
+- `phoneNumber`: Employee's phone number (optional)
 
 ## 🔐 Authentication
 
@@ -100,15 +101,20 @@ Authorization: Bearer your-secret-api-token-here
     "firstName": "John",
     "lastName": "Doe",
     "aadhar_link": "https://aadhar.gov.in/verify/123456789012",
-    "attendance": false
+    "attendance": false,
+    "phoneNumber": "9876543210"
   }
 }
 ```
 
-### Get All Employees
+### Get All Employees (with Pagination)
 ```
-GET /api/employees
+GET /api/employees?page=1&limit=10
 ```
+
+**Query Parameters:**
+- `page` (optional, default: 1): Page number
+- `limit` (optional, default: 10): Number of employees per page
 
 **Headers:**
 ```
@@ -126,89 +132,19 @@ Authorization: Bearer your-secret-api-token-here
       "firstName": "John",
       "lastName": "Doe",
       "aadhar_link": "https://aadhar.gov.in/verify/123456789012",
-      "attendance": false
+      "attendance": false,
+      "phoneNumber": "9876543210"
     }
+    // ... more employees ...
   ],
-  "count": 1
+  "count": 10,
+  "total": 100,
+  "page": 1,
+  "totalPages": 10
 }
 ```
 
 ## 🔧 Available Scripts
 
 - `npm run dev` - Start development server with nodemon
-- `npm run build` - Generate Prisma client
-- `npm run db:migrate` - Run database migrations
-- `npm run db:seed` - Seed database with sample data
-- `npm run db:studio` - Open Prisma Studio for database management
-
-## 📁 Project Structure
-
-```
-src/
-├── config/           # Configuration files
-├── controller/       # HTTP request handlers
-├── middlewares/      # Custom middleware
-├── routes/           # API route definitions
-├── services/         # Business logic
-├── utils/            # Utility functions
-└── server.js         # Express server setup
-```
-
-## 🛡️ Error Handling
-
-The API returns consistent error responses:
-
-```json
-{
-  "success": false,
-  "message": "Error message",
-  "error": "Detailed error description"
-}
-```
-
-Common HTTP status codes:
-- `200` - Success
-- `400` - Bad Request
-- `401` - Unauthorized (missing token)
-- `403` - Forbidden (invalid token)
-- `404` - Not Found
-- `500` - Internal Server Error
-
-## 🧪 Testing the API
-
-### Using curl:
-
-1. **Get employee by ID:**
-   ```bash
-   curl -H "Authorization: Bearer your-secret-api-token-here" \
-        http://localhost:3000/api/employees/EMP001
-   ```
-
-2. **Get all employees:**
-   ```bash
-   curl -H "Authorization: Bearer your-secret-api-token-here" \
-        http://localhost:3000/api/employees
-   ```
-
-### Using Postman:
-
-1. Set the Authorization header:
-   - Type: Bearer Token
-   - Token: `your-secret-api-token-here`
-
-2. Make requests to:
-   - `GET http://localhost:3000/api/employees/EMP001`
-   - `GET http://localhost:3000/api/employees`
-
-## 🔒 Security Considerations
-
-- Change the default API token in production
-- Use environment variables for sensitive data
-- Implement rate limiting for production use
-- Consider adding request validation middleware
-- Use HTTPS in production
-
-## 📝 License
-
-This project is licensed under the ISC License.
-    
+- `
