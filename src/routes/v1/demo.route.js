@@ -4,11 +4,10 @@ const { validatorMiddleware } = require("../../middlewares");
 
 const router = express.Router();
 
-
 router.get(
-    "/users",
-    validatorMiddleware.validate,
-    DemoController.getDemo
+  "/users",
+  validatorMiddleware.validate,
+  DemoController.getDemo
 );
 
-module.exports = router
+module.exports = router;
