@@ -32,8 +32,9 @@ class EmployeeController {
 
   async getAllEmployees(req, res) {
     try {
-      const result = await this.employeeService.getAllEmployees();
-      
+      const page = parseInt(req.query.page, 10) || 1;
+      const limit = parseInt(req.query.limit, 10) || 10;
+      const result = await this.employeeService.getAllEmployees(page, limit);
       return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({

@@ -45,23 +45,33 @@ class EmployeeService {
     }
   }
 
-  async getAllEmployees() {
+  async getAllEmployees(page = 1, limit = 10) {
     try {
-      const employees = await this.prisma.employee.findMany({
-        select: {
-          id: true,
-          employeeId: true,
-          firstName: true,
-          lastName: true,
-          aadhar_link: true,
-          attendance: true
-        }
-      });
+      const skip = (page - 1) * limit;
+      const [employees, total] = await Promise.all([
+        this.prisma.employee.findMany({
+          skip,
+          take: limit,
+          select: {
+            id: true,
+            employeeId: true,
+            firstName: true,
+            lastName: true,
+            aadhar_link: true,
+            attendance: true,
+            phoneNumber: true
+          }
+        }),
+        this.prisma.employee.count()
+      ]);
 
       return {
         success: true,
         data: employees,
-        count: employees.length
+        count: employees.length,
+        total,
+        page,
+        totalPages: Math.ceil(total / limit)
       };
     } catch (error) {
       throw {
