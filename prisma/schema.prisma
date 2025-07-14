@@ -24,5 +24,6 @@ model Emp_management {
   first_name        String
   last_name         String
   aadhar_link       String?
+  whatsapp_number   String
   attendance_status AttendanceStatus @default(Absent)
 }
