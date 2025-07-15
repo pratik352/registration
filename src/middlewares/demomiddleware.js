@@ -3,19 +3,17 @@ const { errorResponse } = require("../utils/common");
 const AppError = require("../utils/error/AppError");
 
 function validate(req, res, next) {
-    
-    if(req.body.name){
-        errorResponse.message = "Name is required";
-        errorResponse.error = new AppError(
-            ["name can not be empty"],
-            StatusCodes.BAD_REQUEST
-        );
+  if (req.body.name) {
+    errorResponse.message = "Name is required";
+    errorResponse.error = new AppError(
+      ["name can not be empty"],
+      StatusCodes.BAD_REQUEST
+    );
 
-        return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
-    }
+    return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
+  }
 
-    next();
+  next();
 }
 
-
-module.exports = { validate }
+module.exports = { validate };
