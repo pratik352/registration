@@ -8,9 +8,9 @@ const testAPI = async () => {
     console.log('🧪 Testing Employee API...\n');
 
     // Test 1: Get all employees
-    console.log('1. Testing GET /api/employees');
+    console.log('1. Testing GET /api/v1/employees');
     try {
-      const response = await axios.get(`${API_BASE_URL}/employees`, {
+      const response = await axios.get(`${API_BASE_URL}/v1/employees`, {
         headers: {
           'Authorization': `Bearer ${API_TOKEN}`
         }
@@ -23,9 +23,9 @@ const testAPI = async () => {
     console.log('\n' + '='.repeat(50) + '\n');
 
     // Test 2: Get specific employee
-    console.log('2. Testing GET /api/employees/EMP001');
+    console.log('2. Testing GET /api/v1/employees/EMP001');
     try {
-      const response = await axios.get(`${API_BASE_URL}/employees/EMP001`, {
+      const response = await axios.get(`${API_BASE_URL}/v1/employees/EMP001`, {
         headers: {
           'Authorization': `Bearer ${API_TOKEN}`
         }
@@ -40,7 +40,7 @@ const testAPI = async () => {
     // Test 3: Test without token
     console.log('3. Testing without authorization token');
     try {
-      const response = await axios.get(`${API_BASE_URL}/employees/EMP001`);
+      const response = await axios.get(`${API_BASE_URL}/v1/employees/EMP001`);
       console.log('✅ Success:', response.data);
     } catch (error) {
       console.log('❌ Error (Expected):', error.response?.data || error.message);
@@ -51,7 +51,7 @@ const testAPI = async () => {
     // Test 4: Test with invalid token
     console.log('4. Testing with invalid token');
     try {
-      const response = await axios.get(`${API_BASE_URL}/employees/EMP001`, {
+      const response = await axios.get(`${API_BASE_URL}/v1/employees/EMP001`, {
         headers: {
           'Authorization': 'Bearer invalid-token'
         }

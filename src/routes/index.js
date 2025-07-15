@@ -1,9 +1,10 @@
 const express = require("express");
-const employeeRoutes = require("./employee.routes");
+const v1Routes = require("./v1");
 
 const router = express.Router();
 
-// Employee routes
-router.use("/employees", employeeRoutes);
+// v1 API routes
+router.use("/v1/employees", v1Routes.employees);
+router.use("/v1/demo", v1Routes.demo);
 
 module.exports = router;
