@@ -10,44 +10,44 @@ const seedEmployees = async () => {
     // Seed sample employees
     const employees = [
       {
-        employeeId: 'EMP001',
-        firstName: 'John',
-        lastName: 'Doe',
+        employee_id: 'EMP001',
+        first_name: 'John',
+        last_name: 'Doe',
         aadhar_link: 'https://aadhar.gov.in/verify/123456789012',
-        attendance: false,
-        phoneNumber: '9876543210'
+        whatsapp_number: '9876543210',
+        attendance_status: 'Present'
       },
       {
-        employeeId: 'EMP002',
-        firstName: 'Jane',
-        lastName: 'Smith',
+        employee_id: 'EMP002',
+        first_name: 'Jane',
+        last_name: 'Smith',
         aadhar_link: 'https://aadhar.gov.in/verify/234567890123',
-        attendance: true,
-        phoneNumber: '8765432109'
+        whatsapp_number: '8765432109',
+        attendance_status: 'Absent'
       },
       {
-        employeeId: 'EMP003',
-        firstName: 'Mike',
-        lastName: 'Johnson',
+        employee_id: 'EMP003',
+        first_name: 'Mike',
+        last_name: 'Johnson',
         aadhar_link: 'https://aadhar.gov.in/verify/345678901234',
-        attendance: false,
-        phoneNumber: '7654321098'
+        whatsapp_number: '7654321098',
+        attendance_status: 'Present'
       },
       {
-        employeeId: 'EMP004',
-        firstName: 'Sarah',
-        lastName: 'Williams',
+        employee_id: 'EMP004',
+        first_name: 'Sarah',
+        last_name: 'Williams',
         aadhar_link: 'https://aadhar.gov.in/verify/456789012345',
-        attendance: true,
-        phoneNumber: '6543210987'
+        whatsapp_number: '6543210987',
+        attendance_status: 'Absent'
       },
       {
-        employeeId: 'EMP005',
-        firstName: 'David',
-        lastName: 'Brown',
+        employee_id: 'EMP005',
+        first_name: 'David',
+        last_name: 'Brown',
         aadhar_link: 'https://aadhar.gov.in/verify/567890123456',
-        attendance: false,
-        phoneNumber: '5432109876'
+        whatsapp_number: '5432109876',
+        attendance_status: 'Present'
       }
     ];
 

@@ -10,7 +10,7 @@ class EmployeeService {
     try {
       const employee = await this.prisma.emp_management.findUnique({
         where: {
-          employeeId: employeeId
+          employee_id: employeeId
         }
       });
 
@@ -25,12 +25,12 @@ class EmployeeService {
       return {
         success: true,
         data: {
-          id: employee.id,
-          employeeId: employee.employeeId,
-          firstName: employee.firstName,
-          lastName: employee.lastName,
+          employee_id: employee.employee_id,
+          first_name: employee.first_name,
+          last_name: employee.last_name,
           aadhar_link: employee.aadhar_link,
-          attendance: employee.attendance
+          whatsapp_number: employee.whatsapp_number,
+          attendance_status: employee.attendance_status
         }
       };
     } catch (error) {
@@ -53,13 +53,12 @@ class EmployeeService {
           skip,
           take: limit,
           select: {
-            id: true,
-            employeeId: true,
-            firstName: true,
-            lastName: true,
+            employee_id: true,
+            first_name: true,
+            last_name: true,
             aadhar_link: true,
-            attendance: true,
-            phoneNumber: true
+            whatsapp_number: true,
+            attendance_status: true
           }
         }),
         this.prisma.emp_management.count()
