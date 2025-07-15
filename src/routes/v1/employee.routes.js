@@ -1,6 +1,6 @@
 const express = require('express');
-const { authenticateToken } = require('../middlewares/auth.middleware');
-const EmployeeController = require('../controller/employee.controller');
+const { authenticateToken } = require('../../middlewares/auth.middleware');
+const EmployeeController = require('../../controller/employee.controller');
 
 const router = express.Router();
 const employeeController = new EmployeeController();

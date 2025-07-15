@@ -81,9 +81,11 @@ Authorization: Bearer your-secret-api-token-here
 
 ## 📡 API Endpoints
 
+All endpoints are now versioned under `/api/v1`.
+
 ### Get Employee by Employee ID
 ```
-GET /api/employees/:employeeId
+GET /api/v1/employees/:employeeId
 ```
 
 **Headers:**
@@ -109,7 +111,7 @@ Authorization: Bearer your-secret-api-token-here
 
 ### Get All Employees (with Pagination)
 ```
-GET /api/employees?page=1&limit=10
+GET /api/v1/employees?page=1&limit=10
 ```
 
 **Query Parameters:**
