@@ -1,18 +1,30 @@
 {
-  "name": "flight_service",
+  "name": "employee_api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Professional Employee API with Prisma ORM and Token Authentication",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
     "start": "npx nodemon src/server.js",
+    "dev": "npx nodemon src/server.js",
+    "build": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev",
+    "db:seed": "node src/utils/seed.js",
+    "db:studio": "npx prisma studio",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "api",
+    "employee",
+    "prisma",
+    "express",
+    "mysql"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^6.11.1",
+    "@prisma/client": "^6.12.0",
+    "axios": "^1.10.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "http-status-codes": "^2.3.0",
@@ -20,6 +32,6 @@
     "mysql2": "^3.7.0"
   },
   "devDependencies": {
-    "prisma": "^6.11.1"
+    "prisma": "^6.12.0"
   }
 }
