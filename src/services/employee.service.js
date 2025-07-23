@@ -8,7 +8,7 @@ class EmployeeService {
 
   async getEmployeeByEmployeeId(employeeId) {
     try {
-      const employee = await this.prisma.emp_management.findUnique({
+      const employee = await this.prisma.employees.findUnique({
         where: {
           employee_id: employeeId
         }
@@ -50,7 +50,7 @@ class EmployeeService {
     try {
       const skip = (page - 1) * limit;
       const [employees, total] = await Promise.all([
-        this.prisma.emp_management.findMany({
+        this.prisma.employees.findMany({
           skip,
           take: limit,
           select: {
@@ -63,7 +63,7 @@ class EmployeeService {
             attendance_status: true
           }
         }),
-        this.prisma.emp_management.count()
+        this.prisma.employees.count()
       ]);
 
       return {
@@ -95,7 +95,7 @@ class EmployeeService {
 
       const skip = (page - 1) * limit;
       const [employees, total] = await Promise.all([
-        this.prisma.emp_management.findMany({
+        this.prisma.employees.findMany({
           where,
           skip,
           take: limit,
@@ -109,7 +109,7 @@ class EmployeeService {
             attendance_status: true
           }
         }),
-        this.prisma.emp_management.count({ where })
+        this.prisma.employees.count({ where })
       ]);
 
       return {

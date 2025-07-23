@@ -5,7 +5,7 @@ const seedEmployees = async () => {
 
   try {
     // Clear existing data
-    await prisma.emp_management.deleteMany();
+    await prisma.employees.deleteMany();
 
     // Seed sample employees
     const employees = [
@@ -57,7 +57,7 @@ const seedEmployees = async () => {
     ];
 
     for (const employee of employees) {
-      await prisma.emp_management.create({
+      await prisma.employees.create({
         data: employee
       });
     }
