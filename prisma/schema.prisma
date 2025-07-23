@@ -19,7 +19,7 @@ enum AttendanceStatus {
   Absent
 }
 
-model Emp_management {
+model Employees {
   employee_id       String           @id
   first_name        String
   last_name         String
