@@ -1,23 +1,64 @@
+// const { PrismaClient, AttendanceStatus } = require('@prisma/client');
+// const prisma = new PrismaClient();
+
+
+// const markAttendance = async (employee_id) => {
+//   return await prisma.employees.update({
+//     where: { employee_id },
+//     data: { attendance_status: AttendanceStatus.Present }
+//   });
+// };
+
+
+// const unmarkAttendance = async (employee_id) => {
+//   return await prisma.employees.update({
+//     where: { employee_id },
+//     data: { attendance_status: AttendanceStatus.Absent }
+//   });
+// };
+
+// module.exports = {
+//   markAttendance,
+//   unmarkAttendance
+// };
 const { PrismaClient, AttendanceStatus } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
 const markAttendance = async (employee_id) => {
+  const employee = await prisma.employees.findUnique({
+    where: { employee_id },
+  });
+
+  if (!employee) {
+    throw new Error('Employee not found');
+  }
+
+  if (employee.attendance_status === AttendanceStatus.Present) {
+    throw new Error('QR already scanned. Attendance already marked.');
+  }
+
   return await prisma.employees.update({
     where: { employee_id },
-    data: { attendance_status: AttendanceStatus.Present }
+    data: { attendance_status: AttendanceStatus.Present },
   });
 };
 
-
 const unmarkAttendance = async (employee_id) => {
+  const employee = await prisma.employees.findUnique({
+    where: { employee_id },
+  });
+
+  if (!employee) {
+    throw new Error('Employee not found');
+  }
+
   return await prisma.employees.update({
     where: { employee_id },
-    data: { attendance_status: AttendanceStatus.Absent }
+    data: { attendance_status: AttendanceStatus.Absent },
   });
 };
 
 module.exports = {
   markAttendance,
-  unmarkAttendance
+  unmarkAttendance,
 };
