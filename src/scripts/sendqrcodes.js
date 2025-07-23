@@ -1,68 +1,5 @@
 
-// const { PrismaClient } = require('@prisma/client');
-// const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
-// const qrcodeTerminal = require('qrcode-terminal');
-// const { generateQRCodeForEmployee } = require('../utils/qrcode/qrcode');
-
-// const prisma = new PrismaClient();
-
-// const client = new Client({
-//   authStrategy: new LocalAuth(),
-//   puppeteer: { headless: true, args: ['--no-sandbox'] }
-// });
-
-// client.on('qr', (qr) => {
-//   console.log('Scan this QR code in WhatsApp:');
-//   qrcodeTerminal.generate(qr, { small: true });
-// });
-
-// client.on('ready', async () => {
-//   console.log('✅ WhatsApp client is ready!');
-
-//   try {
-//     const employees = await prisma.employees.findMany();
-
-//     for (const emp of employees) {
-//       try {
-//         const qrPath = await generateQRCodeForEmployee(emp.employee_id);
-//         const media = MessageMedia.fromFilePath(qrPath);
-
-//         let number = emp.whatsapp_number;
-//         if (!number.startsWith('91')) number = '91' + number;
-//         number = number.replace(/\D/g, '') + '@c.us';
-
-//         const message = `Hello ${emp.first_name} ${emp.last_name},
-
-// We're thrilled to invite you to our upcoming offsite event!
-// To make the check-in process smooth and quick, please scan the attached QR code on *19th of September* without fail. 🌟
-
-// 📲 *Scan the QR Code on 19th Morning (Mandatory)*
-// Further updates will be conveyed to you. 📢
-
-// If you have any questions, email us at *leher_pune@tmf-group.com*
-
-// Best regards,  
-// The TMF Group *Leher* Team`;
-
-//         await client.sendMessage(number, media, { caption: message });
-
-//         console.log(`✅ Sent QR to: ${emp.first_name} ${emp.last_name} (${emp.employee_id})`);
-//       } catch (err) {
-//         console.error(`❌ Failed for ${emp.employee_id}:`, err.message);
-//       }
-//     }
-
-//     console.log('All QR codes sent.');
-//   } catch (err) {
-//     console.error('Error sending QRs:', err.message);
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// });
-
-// client.initialize();
-
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, Is_qr_sent } = require('@prisma/client');
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const qrcodeTerminal = require('qrcode-terminal');
 const { generateQRCodeForEmployee } = require('../utils/qrcode/qrcode');
@@ -102,7 +39,7 @@ client.on('ready', async () => {
       const emp = employees[index];
 
       try {
-        const qrPath = await generateQRCodeForEmployee(emp.employee_id);
+        const qrPath = await generateQRCodeForEmployee(emp.uuid);
         const media = MessageMedia.fromFilePath(qrPath);
 
         let number = emp.whatsapp_number;
@@ -135,9 +72,20 @@ The TMF Group *Leher* Team`;
             await client.sendMessage(number, media, { caption: message });
             console.log(`\n✅ Sent QR to: ${emp.first_name} ${emp.last_name} (${emp.employee_id})`);
             successCount++;
+            // we need upadete the bool value in the db 
+           
+            await prisma.employees.update({
+                where: { employee_id: emp.employee_id},
+                data: { is_qr_sent: Is_qr_sent.sent},
+              });
+
           } catch (sendErr) {
-            console.error(`\n❌ Failed to send to ${emp.employee_id}:`, sendErr.message);
+            console.error(`\n❌ Failed to send to ${emp.first_name} ${emp.last_name} ${emp.employee_id}:`, sendErr.message);
             failureCount++;
+             await prisma.employees.update({
+                where: { employee_id: emp.employee_id },
+                data: { is_qr_sent: Is_qr_sent.failed },
+              });
           }
 
           index++;

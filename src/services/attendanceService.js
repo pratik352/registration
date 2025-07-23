@@ -24,9 +24,9 @@
 const { PrismaClient, AttendanceStatus } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const markAttendance = async (employee_id) => {
-  const employee = await prisma.employees.findUnique({
-    where: { employee_id },
+const markAttendance = async (uuid) => {
+  const employee = await prisma.employees.findFirst({
+    where: { uuid },
   });
 
   if (!employee) {
@@ -38,14 +38,14 @@ const markAttendance = async (employee_id) => {
   }
 
   return await prisma.employees.update({
-    where: { employee_id },
+    where: { employee_id:employee.employee_id },
     data: { attendance_status: AttendanceStatus.Present },
   });
 };
 
-const unmarkAttendance = async (employee_id) => {
-  const employee = await prisma.employees.findUnique({
-    where: { employee_id },
+const unmarkAttendance = async (uuid) => {
+  const employee = await prisma.employees.findFirst({
+    where: { uuid },
   });
 
   if (!employee) {
@@ -53,7 +53,7 @@ const unmarkAttendance = async (employee_id) => {
   }
 
   return await prisma.employees.update({
-    where: { employee_id },
+    where: { employee_id:employee.employee_id },
     data: { attendance_status: AttendanceStatus.Absent },
   });
 };

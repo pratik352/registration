@@ -13,11 +13,17 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+enum Is_qr_sent {
+  sent
+  failed
+}
 
 enum AttendanceStatus {
   Present
   Absent
 }
+
+
 
 model employees {
   employee_id       String           @id
@@ -27,4 +33,7 @@ model employees {
   aadhar_link       String?
   whatsapp_number   String
   attendance_status AttendanceStatus @default(Absent)
+  uuid              String           @unique
+  is_qr_sent        Is_qr_sent       @default(failed)
+
 }
