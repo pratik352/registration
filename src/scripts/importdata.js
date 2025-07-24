@@ -48,7 +48,7 @@
 const fs = require('fs');
 const xlsx = require('xlsx');
 const path = require('path');
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient,Is_qr_sent } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
@@ -83,6 +83,8 @@ const prisma = new PrismaClient();
             whatsapp_number: String(emp.whatsapp_number),
             city: emp.city || '',
             attendance_status: 'Absent',
+            uuid:emp.uuid ,             
+            is_qr_sent:Is_qr_sent.failed        
           },
         });
 

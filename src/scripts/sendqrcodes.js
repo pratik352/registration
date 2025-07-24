@@ -1,5 +1,5 @@
 
-// const { PrismaClient } = require('@prisma/client');
+// const { PrismaClient, Is_qr_sent } = require('@prisma/client');
 // const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 // const qrcodeTerminal = require('qrcode-terminal');
 // const { generateQRCodeForEmployee } = require('../utils/qrcode/qrcode');
@@ -8,23 +8,38 @@
 
 // const client = new Client({
 //   authStrategy: new LocalAuth(),
-//   puppeteer: { headless: true, args: ['--no-sandbox'] }
+//   puppeteer: { headless: false, args: ['--no-sandbox'] }
 // });
 
+// let successCount = 0;
+// let failureCount = 0;
+
 // client.on('qr', (qr) => {
-//   console.log('Scan this QR code in WhatsApp:');
+//   console.log('\n Scan this QR code to log into WhatsApp:\n');
 //   qrcodeTerminal.generate(qr, { small: true });
 // });
 
 // client.on('ready', async () => {
-//   console.log('✅ WhatsApp client is ready!');
+//   console.log('\n✅ WhatsApp client is ready!\n');
 
 //   try {
 //     const employees = await prisma.employees.findMany();
 
-//     for (const emp of employees) {
+//     let index = 0;
+
+//     const sendNext = async () => {
+//       if (index >= employees.length) {
+//         console.log(`\n✅ All employees processed.`);
+//         console.log(`\n✅ Successfully sent: ${successCount}`);
+//         console.log(`❌ Failed: ${failureCount}\n`);
+//         await prisma.$disconnect();
+//         return;
+//       }
+
+//       const emp = employees[index];
+
 //       try {
-//         const qrPath = await generateQRCodeForEmployee(emp.employee_id);
+//         const qrPath = await generateQRCodeForEmployee(emp.uuid);
 //         const media = MessageMedia.fromFilePath(qrPath);
 
 //         let number = emp.whatsapp_number;
@@ -44,25 +59,58 @@
 // Best regards,  
 // The TMF Group *Leher* Team`;
 
-//         await client.sendMessage(number, media, { caption: message });
+//         // Countdown display
+//         let countdown = 5;
+//         const interval = setInterval(() => {
+//           process.stdout.write(`⏳ Sending next QR in ${countdown} sec...\r`);
+//           countdown--;
+//           if (countdown < 0) clearInterval(interval);
+//         }, 1000);
 
-//         console.log(`✅ Sent QR to: ${emp.first_name} ${emp.last_name} (${emp.employee_id})`);
+//         setTimeout(async () => {
+//           try {
+//             await client.sendMessage(number, media, { caption: message });
+//             console.log(`\n✅ Sent QR to: ${emp.first_name} ${emp.last_name} (${emp.employee_id})`);
+//             successCount++;
+//             // we need upadete the bool value in the db 
+           
+//             await prisma.employees.update({
+//                 where: { employee_id: emp.employee_id},
+//                 data: { is_qr_sent: Is_qr_sent.sent},
+//               });
+
+//           } catch (sendErr) {
+//             console.error(`\n❌ Failed to send to ${emp.first_name} ${emp.last_name} ${emp.employee_id}:`, sendErr.message);
+//             failureCount++;
+//              await prisma.employees.update({
+//                 where: { employee_id: emp.employee_id },
+//                 data: { is_qr_sent: Is_qr_sent.failed },
+//               });
+//           }
+
+//           index++;
+//           sendNext();
+//         }, 5000);
+
 //       } catch (err) {
-//         console.error(`❌ Failed for ${emp.employee_id}:`, err.message);
+//         console.error(`\n Failed for ${emp.employee_id}:`, err.message);
+//         failureCount++;
+//         index++;
+//         setTimeout(sendNext, 5000);
 //       }
-//     }
+//     };
 
-//     console.log('All QR codes sent.');
+//     sendNext(); // Start recursion
+
 //   } catch (err) {
-//     console.error('Error sending QRs:', err.message);
-//   } finally {
+//     console.error(' Error retrieving employees:', err.message);
 //     await prisma.$disconnect();
 //   }
 // });
 
 // client.initialize();
 
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, Is_qr_sent } = require('@prisma/client');
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const qrcodeTerminal = require('qrcode-terminal');
 const { generateQRCodeForEmployee } = require('../utils/qrcode/qrcode');
@@ -78,12 +126,12 @@ let successCount = 0;
 let failureCount = 0;
 
 client.on('qr', (qr) => {
-  console.log('\n Scan this QR code to log into WhatsApp:\n');
+  console.log('\nScan this QR code to log into WhatsApp:\n');
   qrcodeTerminal.generate(qr, { small: true });
 });
 
 client.on('ready', async () => {
-  console.log('\n✅ WhatsApp client is ready!\n');
+  console.log('\n WhatsApp client is ready!\n');
 
   try {
     const employees = await prisma.employees.findMany();
@@ -93,7 +141,7 @@ client.on('ready', async () => {
     const sendNext = async () => {
       if (index >= employees.length) {
         console.log(`\n✅ All employees processed.`);
-        console.log(`\n✅ Successfully sent: ${successCount}`);
+        console.log(`✅ Successfully sent: ${successCount}`);
         console.log(`❌ Failed: ${failureCount}\n`);
         await prisma.$disconnect();
         return;
@@ -102,7 +150,7 @@ client.on('ready', async () => {
       const emp = employees[index];
 
       try {
-        const qrPath = await generateQRCodeForEmployee(emp.employee_id);
+        const qrPath = await generateQRCodeForEmployee(emp.uuid);
         const media = MessageMedia.fromFilePath(qrPath);
 
         let number = emp.whatsapp_number;
@@ -122,40 +170,59 @@ If you have any questions, email us at *leher_pune@tmf-group.com*
 Best regards,  
 The TMF Group *Leher* Team`;
 
-        // Countdown display
-        let countdown = 5;
-        const interval = setInterval(() => {
-          process.stdout.write(`⏳ Sending next QR in ${countdown} sec...\r`);
+        
+        const randomDelay = Math.floor(Math.random() * (15000 - 3000 + 1)) + 3000;
+        let countdown = Math.floor(randomDelay / 1000);
+
+        
+        const countdownInterval = setInterval(() => {
+          process.stdout.clearLine(0);
+          process.stdout.cursorTo(0);
+          process.stdout.write(` Waiting ${countdown} sec before sending next QR...`);
           countdown--;
-          if (countdown < 0) clearInterval(interval);
+
+          if (countdown < 0) {
+            clearInterval(countdownInterval);
+
+            (async () => {
+              try {
+                await client.sendMessage(number, media, { caption: message });
+                console.log(`\n Sent QR to: ${emp.first_name} ${emp.last_name} (${emp.employee_id})`);
+                successCount++;
+
+                await prisma.employees.update({
+                  where: { employee_id: emp.employee_id },
+                  data: { is_qr_sent: Is_qr_sent.sent },
+                });
+
+              } catch (sendErr) {
+                console.error(`\n❌ Failed to send to ${emp.first_name} ${emp.last_name} (${emp.employee_id}) (${emp.whatsapp_number}):`, sendErr.message);
+                failureCount++;
+
+                await prisma.employees.update({
+                  where: { employee_id: emp.employee_id },
+                  data: { is_qr_sent: Is_qr_sent.failed },
+                });
+              }
+
+              index++;
+              sendNext(); 
+            })();
+          }
         }, 1000);
 
-        setTimeout(async () => {
-          try {
-            await client.sendMessage(number, media, { caption: message });
-            console.log(`\n✅ Sent QR to: ${emp.first_name} ${emp.last_name} (${emp.employee_id})`);
-            successCount++;
-          } catch (sendErr) {
-            console.error(`\n❌ Failed to send to ${emp.employee_id}:`, sendErr.message);
-            failureCount++;
-          }
-
-          index++;
-          sendNext();
-        }, 5000);
-
       } catch (err) {
-        console.error(`\n Failed for ${emp.employee_id}:`, err.message);
+        console.error(`\n❌ Failed for ${emp.employee_id}:`, err.message);
         failureCount++;
         index++;
-        setTimeout(sendNext, 5000);
+        setTimeout(sendNext, 5000); 
       }
     };
 
-    sendNext(); // Start recursion
+    sendNext(); 
 
   } catch (err) {
-    console.error(' Error retrieving employees:', err.message);
+    console.error('❌ Error retrieving employees:', err.message);
     await prisma.$disconnect();
   }
 });
