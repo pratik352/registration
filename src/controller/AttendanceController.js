@@ -54,10 +54,10 @@ const SuccessResponse = require('../utils/common/SuccessResponse');
 const ErrorResponse = require('../utils/common/ErrorResponse');
 
 const mark = async (req, res) => {
-  const { employee_id } = req.body;
+  const { uuid } = req.body;
 
   try {
-    const result = await attendanceService.markAttendance(employee_id);
+    const result = await attendanceService.markAttendance(uuid);
 
     return res.status(200).json({
       ...SuccessResponse,
@@ -79,10 +79,10 @@ const mark = async (req, res) => {
 };
 
 const unmark = async (req, res) => {
-  const { employee_id } = req.body;
+  const { uuid } = req.body;
 
   try {
-    const result = await attendanceService.unmarkAttendance(employee_id);
+    const result = await attendanceService.unmarkAttendance(uuid);
 
     return res.status(200).json({
       ...SuccessResponse,
