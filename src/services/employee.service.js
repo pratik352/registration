@@ -25,6 +25,7 @@ class EmployeeService {
       return {
         success: true,
         data: {
+          uuid: employee.uuid,
           employee_id: employee.employee_id,
           first_name: employee.first_name,
           last_name: employee.last_name,
