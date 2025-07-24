@@ -30,10 +30,9 @@ model employees {
   first_name        String
   last_name         String
   city              String
-  aadhar_link       String?
+  email             String
   whatsapp_number   String
   attendance_status AttendanceStatus @default(Absent)
   uuid              String           @unique
   is_qr_sent        Is_qr_sent       @default(failed)
-
 }

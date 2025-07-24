@@ -29,8 +29,9 @@ class EmployeeService {
           employee_id: employee.employee_id,
           first_name: employee.first_name,
           last_name: employee.last_name,
+          email: employee.email,
           city: employee.city,
-          aadhar_link: employee.aadhar_link,
+          email: employee.email,
           whatsapp_number: employee.whatsapp_number,
           attendance_status: employee.attendance_status
         }
@@ -59,7 +60,7 @@ class EmployeeService {
             first_name: true,
             last_name: true,
             city: true,
-            aadhar_link: true,
+            email: true,
             whatsapp_number: true,
             attendance_status: true
           }
@@ -83,7 +84,7 @@ class EmployeeService {
       };
     }
   }
-  // New: Generic search by any combination of fields except aadhar_link
+  // New: Generic search by any combination of fields except email
   async searchEmployees(query = {}, page = 1, limit = 10) {
     try {
       const { first_name, last_name, city, whatsapp_number, attendance_status } = query;
@@ -105,7 +106,7 @@ class EmployeeService {
             first_name: true,
             last_name: true,
             city: true,
-            aadhar_link: true,
+            email: true,
             whatsapp_number: true,
             attendance_status: true
           }

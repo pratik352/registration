@@ -16,7 +16,7 @@ const resendQR = async (req, res) => {
       return res.status(404).json({ message: 'Employee not found' });
     }
 
-    const qrPath = await generateQRCodeForEmployee(emp.employee_id);
+    const qrPath = await generateQRCodeForEmployee(emp.uuid);
 
     let number = emp.whatsapp_number;
     if (!number.startsWith('91')) number = '91' + number;

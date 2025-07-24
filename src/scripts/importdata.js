@@ -79,7 +79,7 @@ const prisma = new PrismaClient();
             employee_id: emp.employee_id,
             first_name: emp.first_name,
             last_name: emp.last_name,
-            aadhar_link: emp.aadhar_link || null,
+            email: emp.email || null,
             whatsapp_number: String(emp.whatsapp_number),
             city: emp.city || '',
             attendance_status: 'Absent',
