@@ -19,7 +19,7 @@ const resendQR = async (req, res) => {
     const qrPath = await generateQRCodeForEmployee(emp.uuid);
 
     let number = emp.whatsapp_number;
-    if (!number.startsWith('91')) number = '91' + number;
+    number = '91' + number;
     number = number.replace(/\D/g, '') + '@c.us';
 
     const message = `Hello ${emp.first_name} ${emp.last_name},

@@ -15,6 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", apiRoutes);
 
-app.listen(ServerConfig.PORT, (req, res) => {
+app.listen(ServerConfig.PORT,'0.0.0.0', (req, res) => {
     console.log(`server running on port ${ServerConfig.PORT}`);
 });
